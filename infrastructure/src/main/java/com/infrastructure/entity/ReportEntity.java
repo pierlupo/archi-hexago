@@ -1,10 +1,7 @@
 package com.infrastructure.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +20,7 @@ public class ReportEntity {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name="title")
@@ -37,4 +35,8 @@ public class ReportEntity {
 
     @Column(name="description")
     private String description;
+
+    private double latitude;
+
+    private double longitude;
 }

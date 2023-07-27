@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,20 +41,34 @@ public class ReportRepoImpl implements ReportRepo {
 
     @Override
     public List<Report> findAll() {
+        return convertToListReports((List<ReportEntity>) reportEntityRepo.findAll());
+    }
+
+    @Override
+    public List<Report> findAllByDate(LocalDateTime date) {
+        return convertToListReports(reportEntityRepo.findAllByDate(date));
+    }
+
+    @Override
+    public List<Report> findAllByLocation(double latitude, double longitude) {
+        return convertToListReports(reportEntityRepo.findAllByLatitudeAndLongitude(latitude,longitude));
+    }
+
+    @Override
+    public void delete(Report report) {
+        reportEntityRepo.delete(modelMapper.map(report, ReportEntity.class));
+    }
+
+//    @Override
+//    public Report updateReport(int reportId, Report report) {
+//    return null;
+//    }
+
+    //Convertir une liste de ReportEntity en Liste de Report
+    private List<Report> convertToListReports(List<ReportEntity> reportEntities) {
         List<Report> reports = new ArrayList<>();
-        reportEntityRepo.findAll().forEach(r -> {
-            reports.add(modelMapper.map(r, Report.class));
-        });
+        reportEntities.forEach(r ->reports.add(modelMapper.map(r, Report.class)));
         return reports;
     }
 
-    @Override
-    public void deleteById(int reportId) {
-        reportEntityRepo.deleteById(reportId);
-    }
-
-    @Override
-    public Report updateReport(int reportId, Report report) {
-    return null;
-    }
 }

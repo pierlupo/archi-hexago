@@ -69,4 +69,33 @@ public class UserRepoImpl implements UserRepo {
         userEntityRepo.save(userEntity);
         return user;
     }
+
+    @Override
+    public User findByUsername(String username) {
+        return modelMapper.map(
+                userEntityRepo.findByUsername(username), User.class
+        );
+    }
+
+    @Override
+    public Boolean existsByEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public Optional<User> findByUsernameOrEmail(String username, String email) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Boolean existsByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public User findByUsernameAndPassword(String username, String password) {
+        return modelMapper.map(
+                userEntityRepo.findByUsernameAndPassword(username, password), User.class
+        );
+    }
 }

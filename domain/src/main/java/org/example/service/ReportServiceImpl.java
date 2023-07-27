@@ -16,8 +16,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Report createReport(double latitude, double longitude, LocalDateTime date, int level, String comment) {
-        Report report = new Report(latitude, longitude, date, level, comment);
+    public Report createReport(double latitude, double longitude, int level, String comment) {
+        Report report = new Report(latitude, longitude, LocalDateTime.now(), level, comment);
         try {
             this.reportRepo.save(report);
         } catch (Exception ex) {
@@ -32,28 +32,49 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    public List<Report> getAllReports() {
+        return reportRepo.findAll();
+    }
+
+    @Override
+    public List<Report> getReportsByDate(LocalDateTime dateTime) {
+        return reportRepo.findAllByDate(dateTime);
+    }
+
+    @Override
+    public List<Report> getReportsByLocation(double latitude, double longitude) {
+        return reportRepo.findAllByLocation(latitude, longitude);
+    }
+
+    @Override
     public Report findReportById(int reportId) {
         return reportRepo.findById(reportId);
     }
 
     @Override
     public void deleteReport(int reportId) {
-        reportRepo.deleteById(reportId);
+
+        try {
+            Report report = findReportById(reportId);
+            reportRepo.delete(report);
+        }catch (Exception ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
     }
+
 
     @Override
     public Report updateReport(int reportId, Report report) {
-        reportRepo.findById(reportId);
-        if(reportId > 0) {
-            try {
-                report.setLatitude(report.getLatitude());
-                report.setLongitude(report.getLongitude());
-                report.setDate(report.getDate());
-                report.setLevel(report.getLevel());
-            } catch (Exception ex) {
-                throw new RuntimeException(ex.getMessage());
-            }
+        try {
+            Report oldReport = findReportById(reportId);
+            oldReport.setComment(report.getComment());
+            oldReport.setLevel(report.getLevel());
+            oldReport.setLatitude(report.getLatitude());
+            oldReport.setLongitude(report.getLongitude());
+            return reportRepo.save(oldReport);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex.getMessage());
         }
-       return  reportRepo.save(report);
     }
+
 }

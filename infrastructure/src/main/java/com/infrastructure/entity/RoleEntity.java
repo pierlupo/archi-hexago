@@ -8,31 +8,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Entity
-@Table(name = "users")
+@Table(name = "role")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserEntity {
+public class RoleEntity {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name="name")
-    @Size(min=4, message ="Username too short; must have at least {min} characters")
+    @Size(min=4, message ="name too short; must have at least {min} characters")
     private String name;
-
-    @Column(name="user_name")
-    private String username;
-
-    @Column(name="password")
-    private String password;
-
-    @Column(name="email")
-    private String email;
-
-
 }

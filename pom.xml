@@ -14,8 +14,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>domain</module>
-        <module>adapter</module>
-        <module>infrastructure</module>
         <module>application</module>
     </modules>
 

@@ -34,6 +34,9 @@ public class Report {
         this.comment = comment;
     }
 
+    public Report() {
+    }
+
     public int getId() {
         return id;
     }
@@ -60,10 +63,6 @@ public class Report {
 
     public LocalDateTime getDate() {
         return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
     }
 
     public int getLevel() {

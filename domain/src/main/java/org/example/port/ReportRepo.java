@@ -2,6 +2,7 @@ package org.example.port;
 
 import org.example.entity.Report;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ReportRepo {
@@ -12,8 +13,14 @@ public interface ReportRepo {
 
     List<Report> findAll();
 
-    void deleteById(int id);
+    List<Report> findAllByDate(LocalDateTime date);
 
-    Report updateReport(int id, Report report);
+    List<Report> findAllByLocation(double latitude, double longitude);
+
+    void delete(Report report);
+
+   // Report updateReport(int id, Report report);
 
 }
+
+

@@ -5,6 +5,7 @@ import org.example.port.UserRepo;
 import org.example.port.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
 
@@ -52,5 +53,25 @@ public class UserServiceImpl implements UserService {
             }
         }
        return userRepo.save(user);
+    }
+
+    @Override
+    public User getUserByUserNameAndPassword(String username, String password) {
+        return userRepo.findByUsernameAndPassword(username, password);
+    }
+
+    @Override
+    public User getUserByUserName(String username) {
+        return userRepo.findByUsername(username);
+    }
+
+    @Override
+    public User findByUsernameAndPassword(String username, String password) {
+        return null;
+    }
+
+    @Override
+    public Optional<User> findByUsernameOrEmail(String username, String email) {
+        return Optional.empty();
     }
 }
